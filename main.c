@@ -11,7 +11,7 @@ void atualizar_leds(unsigned int vol);
 volatile unsigned int t_subida = 0;
 volatile unsigned int largura = 0;
 volatile unsigned int distancia = 0;
-unsigned int vol = 0;
+
 
 
 void main(void)
@@ -20,12 +20,13 @@ void main(void)
     ini_P1_P2();
     ini_Timer0_PWM_Trigger();
     ini_Timer1_Captura_Echo();
+    atualizar_leds();
 
     do {
     } while (1);
 }
 
-void atualizar_leds(unsigned int vol){
+void atualizar_leds(void){
     unsigned char mask_p2 = 0, mask_p1 = 0;
     mask_p2 = BIT2 | BIT3 | BIT4 | BIT5 | BIT6 | BIT7;
 
