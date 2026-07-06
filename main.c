@@ -6,7 +6,7 @@ void ini_uCon(void);
 void ini_P1_P2(void);
 void ini_Timer0_PWM_Trigger(void);
 void ini_Timer1_Captura_Echo(void);
-void atualizar_leds(unsigned int vol);
+void atualizar_leds(void);
 
 volatile unsigned int t_subida = 0;
 volatile unsigned int largura = 0;
