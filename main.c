@@ -27,7 +27,7 @@ void main(void)
 
 void atualizar_leds(unsigned int vol){
     unsigned char mask_p2 = 0, mask_p1 = 0;
-    mask_p2 = BIT2 | BIT3;
+    mask_p2 = BIT2 | BIT3 | BIT4 | BIT5 | BIT6 | BIT7;
 
     P2OUT = (P2OUT & ~(BIT2+BIT3+BIT4+BIT5+BIT6+BIT7)) | mask_p2;
     P1OUT = (P1OUT & ~(BIT6+BIT7)) | mask_p1;
