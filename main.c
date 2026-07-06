@@ -6,10 +6,13 @@ void ini_uCon(void);
 void ini_P1_P2(void);
 void ini_Timer0_PWM_Trigger(void);
 void ini_Timer1_Captura_Echo(void);
+void atualizar_leds(unsigned int vol);
 
 volatile unsigned int t_subida = 0;
 volatile unsigned int largura = 0;
 volatile unsigned int distancia = 0;
+unsigned int vol = 0;
+
 
 void main(void)
 {
@@ -20,6 +23,26 @@ void main(void)
 
     do {
     } while (1);
+}
+
+void atualizar_leds(unsigned int vol){
+    unsigned char n_leds;
+    unsigned char mask_p2 = 0, mask_p1 = 0;
+
+    n_leds = (unsigned char)((vol * 2) / 5);
+    if(n_leds > 8) n_leds = 8;
+
+    if(n_leds >= 1) mask_p2 |= BIT2;
+    if(n_leds >= 2) mask_p2 |= BIT3;
+    if(n_leds >= 3) mask_p2 |= BIT4;
+    if(n_leds >= 4) mask_p2 |= BIT5;
+    if(n_leds >= 5) mask_p2 |= BIT6;
+    if(n_leds >= 6) mask_p2 |= BIT7;
+    if(n_leds >= 7) mask_p1 |= BIT6;
+    if(n_leds >= 8) mask_p1 |= BIT7;
+
+    P2OUT = (P2OUT & ~(BIT2+BIT3+BIT4+BIT5+BIT6+BIT7)) | mask_p2;
+    P1OUT = (P1OUT & ~(BIT6+BIT7)) | mask_p1;
 }
 
 #pragma vector = TIMER1_A1_VECTOR
