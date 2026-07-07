@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "MSP430",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/opt/ti/msp430-gcc/include",
+                "/opt/ti/msp430-gcc/lib/gcc/msp430-elf/9.3.1/**"
+            ],
+            "defines": ["__MSP430G2553__"],
+            "compilerPath": "/opt/ti/msp430-gcc/bin/msp430-elf-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}
