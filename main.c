@@ -10,7 +10,9 @@ void ini_UART(void);
 void atualizar_leds(void);
 void uart_write_char(char c);
 void uart_write_str(const char *str);
-void uart_write_int(unsigned int val);
+void uart_write_float(float val);
+float calcularMedia();
+float calcularVolume();
 
 volatile unsigned int t_subida = 0;
 volatile unsigned int largura = 0;
@@ -41,9 +43,14 @@ void main(void)
             atualizar_leds();
 
             // Transmite a distância medida via UART a cada ~500ms
-            uart_write_str("Nivel - Distancia: ");
-            uart_write_int(distancia);
+            uart_write_str("Distancia: ");
+            uart_write_float(calcularMedia());
             uart_write_str(" cm\r\n");
+
+            // Transmite o volume medida via UART a cada ~500ms
+            uart_write_str("Volume: ");
+            uart_write_float(calcularVolume());
+            uart_write_str(" ml\r\n");
         }
         __delay_cycles(500000); // Aguarda 500ms para não lotar o buffer
     } while (1);
@@ -141,30 +148,6 @@ void ini_uCon(void)
     __enable_interrupt();
 }
 
-float calcularMedia()
-{
-    int soma = 0;
-    media = 0;
-
-    for (int i = 0; i < qtdeAmostras; i++)
-    {
-        soma = +amostrasDistancia[i];
-    }
-
-    media = soma / qtdeAmostras;
-
-    return media; // em mm
-}
-
-float calcularVolume()
-{
-    calcularMedia();
-    float alturaAtual = 0;
-    alturaAtual = alturaTotal - media;
-    volumeAtual = (3.14 * raio * raio * alturaAtual) / 1000;
-
-    return volumeAtual; // em ml
-}
 void ini_UART(void)
 {
     // Configura P1.1 (RXD) e P1.2 (TXD) para a função UART (USCI_A0)
@@ -194,22 +177,56 @@ void uart_write_str(const char *str)
     }
 }
 
-void uart_write_int(unsigned int val)
+void uart_write_float(float val)
 {
-    char buf[6];
+    val *= 100; // desloca duas casas para pegar os decimais
+    char buf[8];
     int i = 0;
+
     if (val == 0)
     {
         uart_write_char('0');
         return;
     }
+
     while (val > 0)
     {
-        buf[i++] = (val % 10) + '0';
+        buf[i++] = ((int)val % 10) + '0';
         val /= 10;
+
+        if (i == 1)
+        {
+            buf[i++] = ','; // adiciona a virgula pq é um float
+        }
     }
+
     while (i > 0)
     {
         uart_write_char(buf[--i]);
     }
+}
+
+float calcularMedia()
+{
+    int soma = 0;
+    media = 0;
+
+    for (int i = 0; i < qtdeAmostras; i++)
+    {
+        soma = +amostrasDistancia[i];
+    }
+
+    media = (soma / qtdeAmostras) / 10;
+
+    return media; // em cm
+}
+
+float calcularVolume()
+{
+    calcularMedia();
+    float alturaAtual = 0;
+    alturaAtual = alturaTotal - media;
+    volumeAtual = (3.14 * raio * raio * alturaAtual) / 1000;
+
+    return volumeAtual; // em ml
 }
