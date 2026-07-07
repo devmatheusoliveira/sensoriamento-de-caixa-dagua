@@ -21,12 +21,12 @@ volatile unsigned int indexAtual = 0;
 float volumeAtual = 0;
 float media = 0;
 float raio = 28.5;         // mm
-float alturaTotal = 200.0; // mm ou 20cm
+float alturaTotal = 200.0; // mm
 float volumeTotal;         // em ml
 const unsigned int qtdeAmostras = 32;
 unsigned int amostrasDistancia[qtdeAmostras];
-float volumeMinimo = 500; // ml
-float volumeMaximo = 30;  // ml
+float volumeMinimo = 30;  // ml
+float volumeMaximo = 500; // ml
 
 void main(void)
 {
