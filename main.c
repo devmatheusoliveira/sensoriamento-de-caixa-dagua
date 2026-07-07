@@ -4,7 +4,7 @@
 #define ALTURA_TANQUE 100
 
 // Pinos de controle do 74HC595
-#define DS_PIN    BIT3   // P1.3 - Dado Serial (DS)
+#define DS_PIN    BIT7   // P1.7 - Dado Serial (DS)
 #define SHCP_PIN  BIT4   // P1.4 - Clock de Deslocamento (SHCP)
 #define STCP_PIN  BIT5   // P1.5 - Clock de Armazenamento / Latch (STCP)
 
