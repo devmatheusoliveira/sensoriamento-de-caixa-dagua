@@ -25,6 +25,8 @@ float alturaTotal = 200.0; // mm ou 20cm
 float volumeTotal;         // em ml
 const unsigned int qtdeAmostras = 32;
 unsigned int amostrasDistancia[qtdeAmostras];
+float volumeMinimo = 500; // ml
+float volumeMaximo = 30;  // ml
 
 void main(void)
 {
@@ -229,4 +231,17 @@ float calcularVolume()
     volumeAtual = (3.14 * raio * raio * alturaAtual) / 1000;
 
     return volumeAtual; // em ml
+}
+
+void ligarBombaAgua()
+{
+    float volume = calcularVolume();
+    if (volume < volumeMinimo)
+    {
+        // ligar bomba Agua
+    }
+    else if (volume >= volumeMaximo)
+    {
+        // desliga bomba Agua
+    }
 }
