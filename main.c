@@ -19,7 +19,7 @@ volatile unsigned int largura = 0;
 float distancia = 0;
 volatile unsigned int indexAtual = 0;
 float volumeAtual = 0;
-float media = 0;
+float mediaAtual = 0;
 float raio = 28.5;         // mm
 float alturaTotal = 200.0; // mm
 float volumeTotal;         // em ml
@@ -42,16 +42,18 @@ void main(void)
     {
         if (distancia > 0)
         {
+            mediaAtual = calcularMedia();
+            volumeAtual = calcularVolume(mediaAtual);
             atualizar_leds();
 
             // Transmite a distância medida via UART a cada ~500ms
             uart_write_str("Distancia: ");
-            uart_write_float(calcularMedia());
+            uart_write_float(mediaAtual);
             uart_write_str(" cm\r\n");
 
             // Transmite o volume medida via UART a cada ~500ms
             uart_write_str("Volume: ");
-            uart_write_float(calcularVolume());
+            uart_write_float(volumeAtual);
             uart_write_str(" ml\r\n");
         }
         __delay_cycles(500000); // Aguarda 500ms para não lotar o buffer
@@ -211,7 +213,7 @@ void uart_write_float(float val)
 float calcularMedia()
 {
     int soma = 0;
-    media = 0;
+    float media = 0;
 
     for (int i = 0; i < qtdeAmostras; i++)
     {
@@ -223,19 +225,18 @@ float calcularMedia()
     return media; // em cm
 }
 
-float calcularVolume()
+float calcularVolume(float media)
 {
-    calcularMedia();
-    float alturaAtual = 0;
+    // calcularMedia();
+    float alturaAtual = 0, volume = 0;
     alturaAtual = alturaTotal - media;
-    volumeAtual = (3.14 * raio * raio * alturaAtual) / 1000;
+    volume = (3.14 * raio * raio * alturaAtual) / 1000;
 
-    return volumeAtual; // em ml
+    return volume; // em ml
 }
 
-void ligarBombaAgua()
+void ligarBombaAgua(float volume)
 {
-    float volume = calcularVolume();
     if (volume < volumeMinimo)
     {
         // ligar bomba Agua
