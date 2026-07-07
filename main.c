@@ -225,7 +225,7 @@ float calcularMedia()
     return media; // em cm
 }
 
-float calcularVolume(float media)
+float calcularVolume(float media) // deixe recebe por parametro parasempre tá a mesma media que o mostrado na uart
 {
     // calcularMedia();
     float alturaAtual = 0, volume = 0;
@@ -235,7 +235,7 @@ float calcularVolume(float media)
     return volume; // em ml
 }
 
-void ligarBombaAgua(float volume)
+void ligarBombaAgua(float volume) // deixe recebe por parametro parasempre tá a mesma volume que o mostrado na uart
 {
     if (volume < volumeMinimo)
     {
