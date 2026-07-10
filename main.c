@@ -1,15 +1,15 @@
 #include <msp430.h>
 
-#define QTDE_AMOSTRAS 32            // Janela movel de 32 amostras
-#define PERIODO_TRIGGER 20000       // Periodo do PWM do Trigger: 20 ms
-#define LARGURA_TRIGGER 15          // Pulso de Trigger de 15 us (>= 10 us)
-#define TIMEOUT_ECO 60000           // ~60 ms sem Echo -> reinicia o ciclo
-#define LIMITE_TIMEOUTS 25          // ~2 s sem eco -> aviso na serial
+#define QTDE_AMOSTRAS 32            
+#define PERIODO_TRIGGER 20000       
+#define LARGURA_TRIGGER 15          
+#define TIMEOUT_ECO 60000           
+#define LIMITE_TIMEOUTS 25          
 #define UART_DIVISOR 25
 #define LED_DIVISOR 15
 
-#define FASE_TRIGGER 0              // Timer0 em modo PWM gerando o Trigger
-#define FASE_CAPTURA 1              // Timer0 reconfigurado em modo Captura (Echo)
+#define FASE_TRIGGER 0              
+#define FASE_CAPTURA 1              
 
 void ini_uCon(void);
 void ini_P1_P2(void);
